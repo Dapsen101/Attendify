@@ -1,4 +1,7 @@
 {
+  // This is the web app manifest for the Attendify PWA.
+  // It provides metadata for installing the app on mobile/desktop,
+  // including icons, start URL, theme colors, and display mode.
   "short_name": "React App",
   "name": "Create React App Sample",
   "icons": [

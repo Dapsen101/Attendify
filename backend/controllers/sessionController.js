@@ -1,3 +1,8 @@
+// This controller handles session-related operations for lecturers.
+// - createSession: Creates a new attendance session with a unique token.
+// - getActiveSessions: Retrieves active (non-expired) sessions for the lecturer.
+// - endSession: Manually ends a session by setting expiresAt to now.
+// - getLecturerStats: Gets the count of unique students who attended the lecturer's sessions.
 const Session = require('../models/Session');
 const Course = require('../models/Course'); // for verification if needed
 

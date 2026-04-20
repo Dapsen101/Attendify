@@ -1,3 +1,6 @@
+# This robots.txt file tells web crawlers which pages they can access.
+# User-agent: * means this applies to all crawlers.
+# Disallow: means no pages are disallowed, so all pages can be crawled.
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow:

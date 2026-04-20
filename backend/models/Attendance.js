@@ -1,3 +1,9 @@
+// This is the Mongoose model for Attendance in Attendify.
+// It records when a student marks their attendance for a session.
+// Fields:
+// - student: Reference to the User (student) who marked attendance
+// - session: Reference to the Session for which attendance was marked
+// Timestamps are added automatically.
 const mongoose = require('mongoose');
 const attendanceSchema = new mongoose.Schema({
     student: {

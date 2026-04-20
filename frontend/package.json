@@ -1,3 +1,11 @@
+// This is the package.json file for the frontend of Attendify.
+// It contains dependencies for the React application, including:
+// - react, react-dom: Core React libraries
+// - react-router-dom: For client-side routing
+// - axios: For HTTP requests to the backend
+// - tailwindcss, postcss, autoprefixer: For styling
+// - Testing libraries: For unit and integration tests
+// Scripts: start (dev server), build (production build), test, eject
 {
   "name": "attendify-frontend",
   "version": "0.1.0",

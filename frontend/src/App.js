@@ -1,3 +1,8 @@
+// This is the main App component for the Attendify React application.
+// It defines the routing structure using React Router.
+// Routes include landing page, authentication (login/register), 
+// dashboard, session creation, token entry, success page, and reports.
+// All routes are wrapped in Routes from react-router-dom.
 import { Routes, Route } from "react-router-dom";
 
 import Landing from "./pages/Landing";

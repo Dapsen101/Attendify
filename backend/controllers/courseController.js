@@ -1,3 +1,6 @@
+// This controller handles course-related operations.
+// - createCourse: Allows lecturers to create new courses.
+// - getCourses: Retrieves all courses created by the logged-in lecturer.
 const Course = require('../models/Course');
 
 exports.createCourse = async (req, res) => {

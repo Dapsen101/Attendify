@@ -1,3 +1,7 @@
+// This controller handles authentication-related operations for Attendify.
+// It includes functions for user registration and login.
+// - register: Creates a new user account, hashes the password, and saves to DB.
+// - login: Verifies user credentials and returns a JWT token if valid.
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');

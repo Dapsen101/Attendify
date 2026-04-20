@@ -1,3 +1,8 @@
+// This is the main entry point for the Attendify backend server.
+// It sets up an Express.js application, connects to the MongoDB database,
+// configures middleware for CORS and JSON parsing, and mounts API routes
+// for authentication, courses, sessions, and attendance.
+// The server listens on port 5001 (or PORT from environment).
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');

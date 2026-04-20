@@ -1,3 +1,5 @@
+/* This CSS file contains styles specific to authentication pages (login/register).
+It includes global resets, body background, centering utilities, and card styling. */
 * {
     box-sizing: border-box;
     margin: 0;

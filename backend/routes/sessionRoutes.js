@@ -1,3 +1,10 @@
+// This file defines the routes for session-related endpoints.
+// These routes are protected and restricted to lecturers.
+// Routes:
+// - POST /create: Creates a new attendance session
+// - GET /active: Gets active sessions for the lecturer
+// - GET /stats: Gets statistics for the lecturer
+// - POST /:id/end: Ends a specific session
 const express = require('express');
 const router = express.Router();
 const sessionController = require('../controllers/sessionController');

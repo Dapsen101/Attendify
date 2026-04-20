@@ -1,3 +1,6 @@
+// This controller handles attendance-related operations.
+// - markAttendance: Allows students to mark their attendance using a session token.
+// - getReports: Retrieves attendance reports for the lecturer, showing all records.
 const Attendance = require('../models/Attendance');
 const Session = require('../models/Session');
 

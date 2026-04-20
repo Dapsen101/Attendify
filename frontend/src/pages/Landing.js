@@ -1,3 +1,7 @@
+// This is the Landing page component for Attendify.
+// It serves as the home page, displaying the app's branding and
+// providing login buttons for students and lecturers.
+// Uses React Router's useNavigate for navigation.
 import { useNavigate } from "react-router-dom";
 
 function Landing() {

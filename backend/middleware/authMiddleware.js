@@ -1,3 +1,8 @@
+// This middleware handles authentication and authorization for protected routes.
+// The 'protect' function verifies JWT tokens and optionally checks user roles.
+// It extracts the token from the Authorization header, verifies it, and attaches
+// the decoded user info to req.user. If roles are specified, it ensures the user
+// has the required role before allowing access.
 const jwt = require('jsonwebtoken');
 
 exports.protect = (roles = []) => {

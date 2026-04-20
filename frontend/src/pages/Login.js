@@ -1,3 +1,8 @@
+// This is the Login page component for Attendify.
+// It allows users (students and lecturers) to log in with email and password.
+// After successful login, it stores the JWT token and user data in localStorage,
+// then redirects students to enter-token page and lecturers to welcome page.
+// Uses URL search params to pre-select the role.
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import API from "../api/axios";

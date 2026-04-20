@@ -1,3 +1,6 @@
+/* This is the main CSS file for the Attendify React application.
+It contains global styles and component-specific styles.
+Includes styles for the App component, logo animation, header, and links. */
 .App {
   text-align: center;
 }

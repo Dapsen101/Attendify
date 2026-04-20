@@ -1,3 +1,7 @@
+/* This is the global CSS file for the Attendify application.
+It imports the Inter font from Google Fonts and defines CSS custom properties (variables)
+for colors, shadows, and other design tokens used throughout the app.
+These variables ensure consistent styling across components. */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {

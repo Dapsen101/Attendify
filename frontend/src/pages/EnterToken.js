@@ -1,3 +1,7 @@
+// This is the EnterToken page component for students in Attendify.
+// Students enter the 6-digit token provided by the lecturer to mark their attendance.
+// Upon successful submission, redirects to the success page.
+// Handles loading states and error messages.
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
