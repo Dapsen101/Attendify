@@ -1,4 +1,4 @@
-// This file handles the database connection for the Attendify backend.
+// This file handles the database connection for the Attendx backend.
 // It uses Mongoose to connect to MongoDB using the MONGO_URI from environment variables.
 // If the connection fails, it logs the error and exits the process.
 const mongoose = require('mongoose');

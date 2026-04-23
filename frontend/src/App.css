@@ -1,4 +1,4 @@
-/* This is the main CSS file for the Attendify React application.
+/* This is the main CSS file for the Attendx React application.
 It contains global styles and component-specific styles.
 Includes styles for the App component, logo animation, header, and links. */
 .App {
@@ -39,3 +39,4 @@ Includes styles for the App component, logo animation, header, and links. */
     transform: rotate(360deg);
   }
 }
+

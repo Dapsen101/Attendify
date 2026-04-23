@@ -1,13 +1,5 @@
-// This is the package.json file for the frontend of Attendify.
-// It contains dependencies for the React application, including:
-// - react, react-dom: Core React libraries
-// - react-router-dom: For client-side routing
-// - axios: For HTTP requests to the backend
-// - tailwindcss, postcss, autoprefixer: For styling
-// - Testing libraries: For unit and integration tests
-// Scripts: start (dev server), build (production build), test, eject
 {
-  "name": "attendify-frontend",
+  "name": "attendx-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -18,6 +10,7 @@
     "axios": "^1.14.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.14.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"

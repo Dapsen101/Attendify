@@ -3,6 +3,15 @@ import { useNavigate } from "react-router-dom";
 function Success() {
   const navigate = useNavigate();
 
+  const handleReturn = () => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    if (user.role === "student") {
+      navigate("/student-dashboard");
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <div className="app-container center-flex">
       <div className="glass-card animate-fade-in" style={{ width: '100%', maxWidth: '400px', textAlign: "center", padding: '3rem 2rem' }}>
@@ -24,7 +33,7 @@ function Success() {
           You have successfully recorded your attendance for this session.
         </p>
 
-        <button className="btn btn-primary btn-block mt-4" onClick={() => navigate('/')}>
+        <button className="btn btn-primary btn-block mt-4" onClick={handleReturn}>
           Return Home
         </button>
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import toast from 'react-hot-toast';
 
 function CreateSession() {
   const [courses, setCourses] = useState([]);
@@ -23,16 +24,16 @@ function CreateSession() {
   };
 
   const handleCreate = async () => {
-    if (!selectedCourse) return alert("Select a course first");
+    if (!selectedCourse) return toast.error("Select a course first");
     
     setIsLoading(true);
     try {
       const { data } = await API.post("/sessions/create", { course: selectedCourse });
       // Send token and expiry info to TokenPage
-      navigate("/token", { state: { token: data.token, expiresAt: data.expiresAt } });
+      navigate("/token", { state: { _id: data._id, token: data.token, expiresAt: data.expiresAt } });
     } catch (error) {
       console.error(error);
-      alert("Failed to create session");
+      toast.error("Failed to create session");
     } finally {
       setIsLoading(false);
     }

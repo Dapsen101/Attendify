@@ -1,14 +1,5 @@
-// This is the package.json file for the backend of Attendify.
-// It contains dependencies for the Node.js Express server, including:
-// - express: Web framework
-// - mongoose: MongoDB ODM
-// - bcryptjs: Password hashing
-// - jsonwebtoken: JWT authentication
-// - cors: Cross-origin resource sharing
-// - dotenv: Environment variables
-// The "dev" script runs the server with nodemon for auto-restart.
 {
-  "name": "attendify-backend",
+  "name": "attendx-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

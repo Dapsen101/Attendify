@@ -8,6 +8,8 @@ const attendanceController = require('../controllers/attendanceController');
 const { protect } = require('../middleware/authMiddleware');
 
 router.post('/mark', protect('student'), attendanceController.markAttendance);
+router.get('/dashboard', protect('student'), attendanceController.getStudentDashboardData);
+router.get('/history', protect('student'), attendanceController.getStudentHistory);
 router.get('/reports', protect('lecturer'), attendanceController.getReports);
 
 module.exports = router;

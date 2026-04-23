@@ -1,4 +1,4 @@
-// This is the Landing page component for Attendify.
+// This is the Landing page component for Attendx.
 // It serves as the home page, displaying the app's branding and
 // providing login buttons for students and lecturers.
 // Uses React Router's useNavigate for navigation.
@@ -23,7 +23,7 @@ function Landing() {
         <h1 className="heading-xl mb-6">Attendance verification<br/><span style={{ color: 'var(--primary)' }}>in seconds.</span></h1>
         
         <p className="text-muted" style={{ marginBottom: '2.5rem', fontSize: '1.125rem', lineHeight: '1.6' }}>
-          Attendify streamlines your classroom experience. Fast, secure, and hassle-free attendance tracking for modern universities.
+          Attendx streamlines your classroom experience. Fast, secure, and hassle-free attendance tracking for modern universities.
         </p>
 
         <div className="flex flex-col gap-4">
@@ -50,3 +50,4 @@ function Landing() {
 }
 
 export default Landing;
+

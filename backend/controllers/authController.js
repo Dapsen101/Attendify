@@ -1,4 +1,4 @@
-// This controller handles authentication-related operations for Attendify.
+// This controller handles authentication-related operations for Attendx.
 // It includes functions for user registration and login.
 // - register: Creates a new user account, hashes the password, and saves to DB.
 // - login: Verifies user credentials and returns a JWT token if valid.

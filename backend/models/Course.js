@@ -1,4 +1,4 @@
-// This is the Mongoose model for Course in Attendify.
+// This is the Mongoose model for Course in Attendx.
 // It defines the schema for course documents, including:
 // - title: Course title
 // - code: Unique course code
@@ -23,3 +23,4 @@ const courseSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model('Course', courseSchema);
+

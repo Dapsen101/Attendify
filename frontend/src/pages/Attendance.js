@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import API from '../api/axios';
+import toast from 'react-hot-toast';
 
 function Attendance() {
   const [matricNumber, setMatricNumber] = useState('');
@@ -7,7 +8,7 @@ function Attendance() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Submitted token ${token} for ${matricNumber}`);
+    toast.success(`Submitted token ${token} for ${matricNumber}`);
     // Later: call backend API to submit attendance
   };
 

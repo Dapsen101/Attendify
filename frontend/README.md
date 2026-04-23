@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This README provides instructions for running and building the Attendify frontend, a React application bootstrapped with Create React App.
+This README provides instructions for running and building the Attendx frontend, a React application bootstrapped with Create React App.
 
 ## Available Scripts
 

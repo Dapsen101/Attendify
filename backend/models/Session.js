@@ -1,4 +1,4 @@
-// This is the Mongoose model for Session in Attendify.
+// This is the Mongoose model for Session in Attendx.
 // Sessions represent attendance-taking periods created by lecturers.
 // Fields:
 // - lecturer: Reference to the User (lecturer) who created the session

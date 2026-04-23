@@ -1,4 +1,4 @@
-// This is the Mongoose model for User in the Attendify application.
+// This is the Mongoose model for User in the Attendx application.
 // It defines the schema for user documents in the database, including fields:
 // - name: User's full name
 // - email: Unique email address

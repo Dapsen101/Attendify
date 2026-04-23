@@ -1,4 +1,4 @@
-// This is the EnterToken page component for students in Attendify.
+// This is the EnterToken page component for students in Attendx.
 // Students enter the 6-digit token provided by the lecturer to mark their attendance.
 // Upon successful submission, redirects to the success page.
 // Handles loading states and error messages.

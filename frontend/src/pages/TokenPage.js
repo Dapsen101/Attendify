@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 function TokenPage() {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ function TokenPage() {
               navigate('/welcome');
             } catch (err) {
               console.error(err);
-              alert('Failed to end session properly');
+              toast.error('Failed to end session properly');
               setIsEnding(false);
             }
           }

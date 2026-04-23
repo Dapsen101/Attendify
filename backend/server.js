@@ -1,4 +1,4 @@
-// This is the main entry point for the Attendify backend server.
+// This is the main entry point for the Attendx backend server.
 // It sets up an Express.js application, connects to the MongoDB database,
 // configures middleware for CORS and JSON parsing, and mounts API routes
 // for authentication, courses, sessions, and attendance.
@@ -25,7 +25,7 @@ app.use('/api/sessions', sessionRoutes);
 app.use('/api/attendance', attendanceRoutes);
 
 app.get('/', (req, res) => {
-  res.send('Attendify Backend is running...');
+  res.send('Attendx Backend is running...');
 });
 
 const PORT = process.env.PORT || 5001;

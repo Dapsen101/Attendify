@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import toast from 'react-hot-toast';
 
 function Welcome() {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ function Welcome() {
       fetchDashboardData();
     } catch (err) {
       console.error("Add Course Error:", err.response?.data);
-      alert(err.response?.data?.message || "Failed to add course");
+      toast.error(err.response?.data?.message || "Failed to add course");
     }
   };
 

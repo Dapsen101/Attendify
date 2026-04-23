@@ -1,4 +1,4 @@
-// This is the Login page component for Attendify.
+// This is the Login page component for Attendx.
 // It allows users (students and lecturers) to log in with email and password.
 // After successful login, it stores the JWT token and user data in localStorage,
 // then redirects students to enter-token page and lecturers to welcome page.
@@ -6,6 +6,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import API from "../api/axios";
+import toast from 'react-hot-toast';
 
 function Login() {
   const [searchParams] = useSearchParams();
@@ -40,14 +41,14 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(data.user));
   
       if (data.user?.role === "student") {
-        navigate("/enter-token");
+        navigate("/student-dashboard");
       } else {
         navigate("/welcome");
       }
   
     } catch (err) {
       console.error(err);
-      alert(err.response?.data?.message || "Server error");
+      toast.error(err.response?.data?.message || "Server error");
     }
   };
 
