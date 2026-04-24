@@ -46,7 +46,7 @@ function Register() {
         matricNumber: role === "student" ? form.matricNumber : undefined
       });
       
-      toast.success(response.data.message || "Registration successful! Please check your email.");
+      toast.success(response.data.message || "Registration successful!");
       // automatically redirect to login
       navigate("/login?role=" + role);
     } catch (err) {

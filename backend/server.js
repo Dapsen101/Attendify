@@ -17,7 +17,7 @@ connectDB();
 
 const app = express();
 app.use(cors({
-  origin: "https://your-vercel-app.vercel.app"
+  origin: "https://attendify-inky.vercel.app"
 })); 
 app.use(express.json());
 
