@@ -3,10 +3,15 @@
 // Upon successful submission, redirects to the success page.
 // Handles loading states and error messages.
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import toast from "react-hot-toast";
 
 function EnterToken() {
+  const [searchParams] = useSearchParams();
+  const courseId = searchParams.get("course");
+  const courseName = searchParams.get("name") || "Course";
+  
   const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -14,18 +19,44 @@ function EnterToken() {
 
   const handleSubmit = async () => {
     if (!token || token.length < 6) return setErrorMsg("Enter a valid 6-digit token");
+    if (!courseId) return setErrorMsg("Missing course information. Please go back and select a course.");
     setErrorMsg("");
     
     setIsLoading(true);
-    try {
-      await API.post("/attendance/mark", { token });
-      navigate("/success");
-    } catch (err) {
-      console.error(err);
-      setErrorMsg(err.response?.data?.message || "Failed to mark attendance.");
-    } finally {
+
+    // Capture location for geofencing
+    if (!navigator.geolocation) {
+      setErrorMsg("Geolocation is not supported by your browser");
       setIsLoading(false);
+      return;
     }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        try {
+          await API.post("/attendance/mark", { 
+            token, 
+            courseId,
+            lat: latitude,
+            lng: longitude
+          });
+          toast.success(`Attendance marked for ${courseName}`);
+          navigate("/success");
+        } catch (err) {
+          console.error(err);
+          setErrorMsg(err.response?.data?.message || "Failed to mark attendance.");
+        } finally {
+          setIsLoading(false);
+        }
+      },
+      (error) => {
+        setIsLoading(false);
+        setErrorMsg("Location access denied. Please enable location to mark attendance.");
+        console.error(error);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
   };
 
   return (
@@ -37,6 +68,7 @@ function EnterToken() {
         </div>
 
         <h2 className="heading-lg mb-4">Enter Token</h2>
+        <p className="text-secondary mb-2" style={{ fontWeight: 600 }}>{courseName}</p>
         <p className="text-muted mb-4" style={{ fontSize: '0.875rem' }}>Please enter the 6-digit session token provided by your lecturer.</p>
 
         {errorMsg && (

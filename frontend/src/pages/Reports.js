@@ -48,7 +48,7 @@ function Reports() {
         {/* HEADER */}
         <div className="flex items-center gap-4 mb-8 animate-fade-in">
           <button
-            className="btn btn-outline"
+            className="btn btn-outline hide-on-mobile"
             style={{ border: "none", padding: "0.5rem 0.75rem", fontSize: "1rem" }}
             onClick={() => navigate("/welcome")}
           >

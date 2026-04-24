@@ -17,7 +17,7 @@ function CreateSession() {
     try {
       const { data } = await API.get("/courses");
       setCourses(data);
-      if (data.length > 0) setSelectedCourse(data[0].title);
+      if (data.length > 0) setSelectedCourse(data[0]._id);
     } catch (error) {
       console.error("Error fetching courses", error);
     }
@@ -27,16 +27,39 @@ function CreateSession() {
     if (!selectedCourse) return toast.error("Select a course first");
     
     setIsLoading(true);
-    try {
-      const { data } = await API.post("/sessions/create", { course: selectedCourse });
-      // Send token and expiry info to TokenPage
-      navigate("/token", { state: { _id: data._id, token: data.token, expiresAt: data.expiresAt } });
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to create session");
-    } finally {
+
+    // Capture location
+    if (!navigator.geolocation) {
+      toast.error("Geolocation is not supported by your browser");
       setIsLoading(false);
+      return;
     }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        try {
+          const { data } = await API.post("/sessions/create", { 
+            course: selectedCourse,
+            lat: latitude,
+            lng: longitude
+          });
+          // Send token and expiry info to TokenPage
+          navigate("/token", { state: { _id: data._id, token: data.token, expiresAt: data.expiresAt } });
+        } catch (error) {
+          console.error(error);
+          toast.error("Failed to create session");
+        } finally {
+          setIsLoading(false);
+        }
+      },
+      (error) => {
+        setIsLoading(false);
+        toast.error("Location access denied. Please enable location to create a session.");
+        console.error(error);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
   };
 
   return (
@@ -61,7 +84,7 @@ function CreateSession() {
           >
             {courses.length === 0 && <option value="">No courses available</option>}
             {courses.map(c => (
-              <option key={c._id} value={c.title}>{c.code} - {c.title}</option>
+              <option key={c._id} value={c._id}>{c.code} - {c.title}</option>
             ))}
           </select>
         </div>
@@ -70,7 +93,7 @@ function CreateSession() {
           {isLoading ? "Generating..." : "Generate Token"}
         </button>
 
-        <button className="btn btn-outline btn-block mt-4" onClick={() => navigate('/welcome')}>
+        <button className="btn btn-outline btn-block mt-4 hide-on-mobile" onClick={() => navigate('/welcome')}>
           Cancel
         </button>
 

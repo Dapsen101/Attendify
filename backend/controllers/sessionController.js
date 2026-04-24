@@ -8,7 +8,7 @@ const Course = require('../models/Course'); // for verification if needed
 
 exports.createSession = async (req, res) => {
   try {
-    const { course } = req.body;
+    const { course, lat, lng } = req.body;
     
     // Generate a secure numerical token
     const token = Math.floor(100000 + Math.random() * 900000).toString();
@@ -20,7 +20,9 @@ exports.createSession = async (req, res) => {
       lecturer: req.user.id,
       course,
       token,
-      expiresAt
+      expiresAt,
+      lat,
+      lng
     });
 
     res.status(201).json(session);

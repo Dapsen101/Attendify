@@ -4,17 +4,64 @@
 const Attendance = require('../models/Attendance');
 const Session = require('../models/Session');
 
+const Enrollment = require('../models/Enrollment');
+
+function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371e3; // radius in metres
+    const φ1 = lat1 * Math.PI/180;
+    const φ2 = lat2 * Math.PI/180;
+    const Δφ = (lat2-lat1) * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    return R * c;
+}
+
 exports.markAttendance = async (req, res) => {
   try {
-    const { token } = req.body;
+    const { token, courseId, lat, lng } = req.body;
     
     if (req.user.role !== 'student') {
         return res.status(403).json({ message: 'Only students can mark attendance' });
     }
 
-    const session = await Session.findOne({ token, expiresAt: { $gt: new Date() } });
+    if (!courseId) {
+        return res.status(400).json({ message: 'Please select a course to mark attendance for' });
+    }
+
+    const session = await Session.findOne({ token, expiresAt: { $gt: new Date() } }).populate('course');
     if (!session) {
         return res.status(400).json({ message: 'Invalid or expired session token' });
+    }
+
+    // 🔥 Check if the session is for the SELECTED course
+    if (session.course._id.toString() !== courseId) {
+        return res.status(400).json({ message: 'This token is not for the selected course' });
+    }
+
+    // 📍 GEOFENCING CHECK
+    if (session.lat && session.lng) {
+        if (!lat || !lng) {
+            return res.status(400).json({ message: 'Location data is required to mark attendance' });
+        }
+        
+        const distance = getDistance(session.lat, session.lng, lat, lng);
+        if (distance > 100) { // 100 meters limit
+            return res.status(403).json({ 
+                message: 'You are too far from the lecturer to mark attendance',
+                distance: Math.round(distance)
+            });
+        }
+    }
+
+    // 🔥 Check if student is REGISTERED for this course
+    const isEnrolled = await Enrollment.findOne({ student: req.user.id, course: courseId });
+    if (!isEnrolled) {
+        return res.status(403).json({ message: 'You are not registered for this course' });
     }
 
     // Check if attendance already marked
@@ -25,7 +72,9 @@ exports.markAttendance = async (req, res) => {
 
     await Attendance.create({
         student: req.user.id,
-        session: session._id
+        session: session._id,
+        lat,
+        lng
     });
 
     res.status(200).json({ message: 'Attendance marked successfully' });
@@ -123,6 +172,51 @@ exports.getStudentHistory = async (req, res) => {
         res.json(history);
     } catch (error) {
         console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+exports.getStudentCoursesWithStats = async (req, res) => {
+    try {
+        // 1. Get all enrollments
+        const enrollments = await Enrollment.find({ student: req.user.id }).populate('course');
+        
+        // 2. Get all attendance records for this student
+        const attendance = await Attendance.find({ student: req.user.id }).populate('session');
+
+        // 3. Calculate stats per course
+        const coursesWithStats = await Promise.all(
+            enrollments
+                .filter(enroll => enroll.course) // 🔥 Filter out deleted courses
+                .map(async (enroll) => {
+                    const course = enroll.course;
+                    
+                    // Total sessions for this course
+                    const totalSessions = await Session.countDocuments({ course: course._id });
+                    
+                    // Sessions attended by this student for this course
+                    const attendedSessions = attendance.filter(a => 
+                        a.session && 
+                        a.session.course && 
+                        a.session.course.toString() === course._id.toString()
+                    ).length;
+
+                    const percentage = totalSessions > 0 ? Math.round((attendedSessions / totalSessions) * 100) : 0;
+
+                    return {
+                        id: course._id,
+                        code: course.code,
+                        title: course.title,
+                        totalSessions,
+                        attendedSessions,
+                        percentage
+                    };
+                })
+        );
+
+        res.json(coursesWithStats);
+    } catch (error) {
+        console.error("Stats Error:", error);
         res.status(500).json({ message: 'Server error' });
     }
 };

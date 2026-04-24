@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import API from "../api/axios";
+import toast from 'react-hot-toast';
 
 function Register() {
   const [searchParams] = useSearchParams();
@@ -28,15 +29,25 @@ function Register() {
     setIsLoading(true);
     setErrorMsg("");
 
+    if (role === 'student' && form.matricNumber) {
+        const letters = (form.matricNumber.match(/[a-zA-Z]/g) || []).length;
+        const digits = (form.matricNumber.match(/[0-9]/g) || []).length;
+        if (letters !== 5 || digits !== 6 || form.matricNumber.length !== 11) {
+            return setErrorMsg("Matric number must contain exactly 5 letters and 6 numbers (11 characters total)");
+        }
+    }
+
     try {
-      await API.post("/auth/register", {
+      const response = await API.post("/auth/register", {
         fullName: form.fullName,
         email: form.email,
         password: form.password,
         role: role,
         matricNumber: role === "student" ? form.matricNumber : undefined
       });
-      // automatically redirect to login with pre-selected role
+      
+      toast.success(response.data.message || "Registration successful! Please check your email.");
+      // automatically redirect to login
       navigate("/login?role=" + role);
     } catch (err) {
       console.error(err);

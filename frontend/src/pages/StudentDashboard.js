@@ -11,6 +11,8 @@ function StudentDashboard() {
     totalSessionsCount: 0,
     upcomingSessions: []
   });
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [showCourseSelect, setShowCourseSelect] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -29,6 +31,9 @@ function StudentDashboard() {
     try {
       const response = await API.get("/attendance/dashboard");
       setStats(response.data);
+      
+      const coursesRes = await API.get("/courses/my-courses");
+      setEnrolledCourses(coursesRes.data);
     } catch (err) {
       console.error(err);
       toast.error("Failed to load dashboard data");
@@ -68,75 +73,66 @@ function StudentDashboard() {
 
         <div className="dashboard-grid">
           {/* Welcome Card */}
-          <div className="glass-card welcome-card">
-            <h2 className="heading-lg mb-2">
+          <div className="glass-card welcome-card" style={{ gridColumn: '1 / -1' }}>
+            <h2 className="heading-xl mb-2">
               Welcome, {user.name.split(' ')[0]} 👋
             </h2>
             <p className="text-muted">Here's your attendance overview</p>
           </div>
 
-          {/* Attendance Rate Card */}
-          <div className="glass-card stat-card">
-            <h3 className="card-title">Attendance Rate</h3>
-            <div className="progress-wrapper">
-              <div className="progress-bg">
-                <div 
-                  className="progress-fill" 
-                  style={{ 
-                    width: `${stats.attendanceRate}%`,
-                    backgroundColor: getProgressColor(stats.attendanceRate)
-                  }}
-                ></div>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="progress-info">{stats.attendanceRate}% attendance</span>
-              </div>
-            </div>
-          </div>
-
           {/* Actions List */}
-          <div className="glass-card actions-card">
-            <div className="action-list">
-              <button className="action-btn" onClick={() => navigate("/enter-token")}>
+          <div className="glass-card actions-card" style={{ gridColumn: '1 / -1' }}>
+            <div className="action-list" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+              <button className="action-btn" onClick={() => setShowCourseSelect(true)}>
                 <span className="icon">📍</span>
                 Mark Attendance
               </button>
+              <button className="action-btn" onClick={() => navigate("/my-courses")}>
+                <span className="icon">📚</span>
+                My Courses
+              </button>
               <button className="action-btn" onClick={() => navigate("/history")}>
                 <span className="icon">📄</span>
-                View Attendance History
+                Attendance History
               </button>
-              <button className="action-btn">
-                <span className="icon">📊</span>
-                Check Statistics
+              <button className="action-btn" onClick={() => navigate("/course-registration")}>
+                <span className="icon">➕</span>
+                Register for Courses
               </button>
             </div>
           </div>
-
-          <div style={{ gridColumn: 'span 7' }}></div>
-
-          {/* Upcoming Classes Card */}
-          <div className="glass-card upcoming-card">
-            <h3 className="card-title">Upcoming Classes</h3>
-            {isLoading ? (
-                <p className="text-muted">Loading classes...</p>
-            ) : stats.upcomingSessions.length > 0 ? (
-                <div className="flex flex-col gap-4">
-                  {stats.upcomingSessions.map(session => (
-                    <div key={session._id} className="flex justify-between items-center p-4" style={{ background: '#f8fafc', borderRadius: '1rem' }}>
-                        <div>
-                            <p style={{ fontWeight: 600 }}>{session.course || 'Unknown Course'}</p>
-                        </div>
-                        <button className="btn btn-secondary btn-sm" onClick={() => navigate("/enter-token")}>
-                            Join Now
-                        </button>
-                    </div>
-                  ))}
-                </div>
-            ) : (
-                <p className="text-muted">No upcoming classes scheduled</p>
-            )}
-          </div>
         </div>
+
+        {/* Course Selection Modal */}
+        {showCourseSelect && (
+          <div className="modal-overlay">
+            <div className="glass-card modal-content animate-pop">
+              <h3 className="heading-md mb-4 text-center">Select Course</h3>
+              <p className="text-muted mb-6 text-center">Which course are you marking attendance for?</p>
+              
+              <div className="flex flex-col gap-3">
+                {enrolledCourses.length > 0 ? (
+                  enrolledCourses.map(course => (
+                    <button 
+                      key={course._id} 
+                      className="btn btn-outline btn-block text-left" 
+                      style={{ justifyContent: 'flex-start', padding: '1rem' }}
+                      onClick={() => navigate(`/enter-token?course=${course._id}&name=${encodeURIComponent(course.code)}`)}
+                    >
+                      <strong>{course.code}</strong> - {course.title}
+                    </button>
+                  ))
+                ) : (
+                  <p className="text-center py-4 text-muted">You are not registered for any courses yet.</p>
+                )}
+              </div>
+
+              <button className="btn btn-secondary btn-block mt-6" onClick={() => setShowCourseSelect(false)}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

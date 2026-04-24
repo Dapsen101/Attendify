@@ -3,7 +3,7 @@
 // After successful login, it stores the JWT token and user data in localStorage,
 // then redirects students to enter-token page and lecturers to welcome page.
 // Uses URL search params to pre-select the role.
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import API from "../api/axios";
 import toast from 'react-hot-toast';

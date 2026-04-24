@@ -399,19 +399,104 @@ body {
   font-size: 1.25rem;
 }
 
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 450px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid var(--border);
+}
+
 /* Tablet / Mobile Adjustments */
 @media (max-width: 900px) {
-  .welcome-card, .stat-card, .actions-card {
-    grid-column: span 12;
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .welcome-card, .stat-card, .actions-card, .upcoming-card, [style*="gridColumn"] {
+    grid-column: span 12 !important;
+  }
+  .heading-xl {
+    font-size: 2rem;
   }
 }
 
 @media (max-width: 640px) {
-  .dashboard-header {
-    flex-direction: row;
-    gap: 1rem;
+  .dashboard-container {
+    padding: 1rem;
   }
+  
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .glass-card {
+    padding: 1.25rem;
+  }
+
   .welcome-card {
     padding: 1.5rem;
+  }
+
+  .heading-xl {
+    font-size: 1.5rem;
+  }
+
+  .heading-lg {
+    font-size: 1.25rem;
+  }
+
+  .btn {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    width: 100%; /* Force buttons to be block on mobile often */
+  }
+
+  .action-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  .modal-content {
+      max-width: 95%;
+      padding: 1.25rem;
+      border-radius: var(--radius-lg);
+  }
+
+  .input-field {
+      padding: 0.75rem;
+      font-size: 0.9375rem;
+  }
+
+  /* Specific fix for EnterToken text alignment on mobile */
+  input.input-field[style*="letterSpacing"] {
+      font-size: 1.25rem !important;
+      letter-spacing: 0.15rem !important;
+  }
+
+  .hide-on-mobile {
+      display: none !important;
   }
 }

@@ -10,7 +10,6 @@ import Landing from "./pages/Landing";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
 import CreateSession from "./pages/CreateSession";
 import TokenPage from "./pages/TokenPage";
 import EnterToken from "./pages/EnterToken";
@@ -18,6 +17,8 @@ import Success from "./pages/Success";
 import Reports from "./pages/Reports";
 import StudentDashboard from "./pages/StudentDashboard";
 import AttendanceHistory from "./pages/AttendanceHistory";
+import CourseRegistration from "./pages/CourseRegistration";
+import MyCourses from "./pages/MyCourses";
 
 function App() {
   return (
@@ -29,7 +30,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
+        <Route path="/my-courses" element={<MyCourses />} />
         <Route path="/history" element={<AttendanceHistory />} />
+        <Route path="/course-registration" element={<CourseRegistration />} />
         <Route path="/create-session" element={<CreateSession />} />
         <Route path="/token" element={<TokenPage />} />
         <Route path="/enter-token" element={<EnterToken />} />

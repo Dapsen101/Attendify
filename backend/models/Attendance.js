@@ -21,7 +21,9 @@ const attendanceSchema = new mongoose.Schema({
     status: {
       type: String,
       default: 'Present'
-    }
+    },
+    lat: Number,
+    lng: Number
   }, { timestamps: true });
   
   module.exports = mongoose.model('Attendance', attendanceSchema);

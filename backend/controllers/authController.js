@@ -11,25 +11,38 @@ exports.register = async (req, res) => {
   const { fullName, email, password, role, matricNumber, department } = req.body;
 
   try {
-    // check if user exists
+    // 1. Validate Matric Number (Students only)
+    if (role === 'student') {
+        const letters = (matricNumber.match(/[a-zA-Z]/g) || []).length;
+        const digits = (matricNumber.match(/[0-9]/g) || []).length;
+        if (letters !== 5 || digits !== 6 || matricNumber.length !== 11) {
+            return res.status(400).json({ message: 'Matric number must contain exactly 5 letters and 6 numbers (11 characters total)' });
+        }
+    }
+
+    // 2. Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ message: 'User already exists' });
 
-    // hash password
+    // 3. Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // create user
+    // 4. Create user (Verified by default)
     const user = await User.create({
       name: fullName,
       email,
       password: hashedPassword,
       role,
       matric: matricNumber || null,
-      department: department || null
+      department: department || null,
+      isVerified: true
     });
 
-    res.status(201).json({ message: 'User registered successfully', userId: user._id });
+    res.status(201).json({ 
+        message: 'Registration successful! You can now log in.', 
+        userId: user._id 
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });

@@ -12,9 +12,14 @@ const sessionSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    course: String,
+    course: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course'
+    },
     token: String,
-    expiresAt: Date
+    expiresAt: Date,
+    lat: Number,
+    lng: Number
   }, { timestamps: true });
   
   module.exports = mongoose.model('Session', sessionSchema);

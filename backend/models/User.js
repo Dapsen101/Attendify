@@ -10,11 +10,26 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   name: String,
-  email: String,
-  password: String,
-  role: String,
-  matric: String,
+  email: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  role: {
+    type: String,
+    enum: ['student', 'lecturer'],
+    required: true
+  },
+  matric: String, // format validation done in controller
   department: String,
-});
+  isVerified: {
+    type: Boolean,
+    default: true
+  }
+}, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

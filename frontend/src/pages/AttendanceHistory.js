@@ -50,7 +50,7 @@ function AttendanceHistory() {
         
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <button className="btn btn-outline" style={{ border: 'none', fontSize: '1.25rem' }} onClick={() => navigate("/student-dashboard")}>
+          <button className="btn btn-outline hide-on-mobile" style={{ border: 'none', fontSize: '1.25rem' }} onClick={() => navigate("/student-dashboard")}>
             ←
           </button>
           <div>
