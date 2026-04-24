@@ -5,15 +5,8 @@ import toast from "react-hot-toast";
 
 function StudentDashboard() {
   const [user, setUser] = useState(null);
-  const [stats, setStats] = useState({
-    attendanceRate: 0,
-    attendedCount: 0,
-    totalSessionsCount: 0,
-    upcomingSessions: []
-  });
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [showCourseSelect, setShowCourseSelect] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,16 +22,11 @@ function StudentDashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      const response = await API.get("/attendance/dashboard");
-      setStats(response.data);
-      
       const coursesRes = await API.get("/courses/my-courses");
       setEnrolledCourses(coursesRes.data);
     } catch (err) {
       console.error(err);
       toast.error("Failed to load dashboard data");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -47,12 +35,6 @@ function StudentDashboard() {
     localStorage.removeItem("user");
     navigate("/login");
     toast.success("Logged out successfully");
-  };
-
-  const getProgressColor = (rate) => {
-    if (rate < 75) return "#ef4444"; // Red
-    if (rate < 80) return "#eab308"; // Yellow
-    return "#22c55e"; // Green
   };
 
   if (!user) return null;
