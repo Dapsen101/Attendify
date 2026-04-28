@@ -51,12 +51,20 @@ exports.register = async (req, res) => {
 
 // 🔐 LOGIN
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role, matric } = req.body;
 
   try {
     // find user
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+
+    if (role && user.role !== role) {
+      return res.status(400).json({ message: `Account is registered as a ${user.role}. Please select the correct role.` });
+    }
+
+    if (user.role === 'student' && (!matric || user.matric?.toLowerCase() !== matric?.toLowerCase())) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
 
     // check password
     const isMatch = await bcrypt.compare(password, user.password);

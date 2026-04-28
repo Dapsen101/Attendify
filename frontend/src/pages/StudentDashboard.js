@@ -48,14 +48,18 @@ function StudentDashboard() {
             <div className="logo-box">A</div>
             <h1 className="logo-text">AttendX</h1>
           </div>
-          <button className="btn btn-primary" style={{ padding: '0.625rem 1.25rem', borderRadius: '2rem' }} onClick={handleLogout}>
+          <button 
+            className="btn btn-primary" 
+            style={{ borderRadius: '2rem' }}
+            onClick={handleLogout}
+          >
             Logout
           </button>
         </header>
 
         <div className="dashboard-grid">
           {/* Welcome Card */}
-          <div className="glass-card welcome-card" style={{ gridColumn: '1 / -1' }}>
+          <div className="glass-card welcome-card">
             <h2 className="heading-xl mb-2">
               Welcome, {user.name.split(' ')[0]} 👋
             </h2>
@@ -63,23 +67,23 @@ function StudentDashboard() {
           </div>
 
           {/* Actions List */}
-          <div className="glass-card actions-card" style={{ gridColumn: '1 / -1' }}>
-            <div className="action-list" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+          <div className="glass-card actions-card">
+            <div className="action-list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '0.75rem' }}>
               <button className="action-btn" onClick={() => setShowCourseSelect(true)}>
                 <span className="icon">📍</span>
-                Mark Attendance
+                <span>Mark Attendance</span>
               </button>
               <button className="action-btn" onClick={() => navigate("/my-courses")}>
                 <span className="icon">📚</span>
-                My Courses
+                <span>My Courses</span>
               </button>
               <button className="action-btn" onClick={() => navigate("/history")}>
                 <span className="icon">📄</span>
-                Attendance History
+                <span>Attendance History</span>
               </button>
               <button className="action-btn" onClick={() => navigate("/course-registration")}>
                 <span className="icon">➕</span>
-                Register for Courses
+                <span>Register for Courses</span>
               </button>
             </div>
           </div>

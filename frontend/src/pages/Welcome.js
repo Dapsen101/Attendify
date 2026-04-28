@@ -87,11 +87,11 @@ function Welcome() {
   const availableDbCourses = dbCourses.filter(c => !myCourseIds.includes(c._id));
 
   return (
-    <div className="app-container" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', overflowY: 'auto' }}>
+    <div className="app-container dashboard-container" style={{ backgroundColor: '#f8fafc', overflowY: 'auto' }}>
       
       <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%', paddingBottom: '2rem' }}>
         {/* HEADER */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 gap-4">
           <div className="flex items-center gap-4">
             <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.25rem' }}>
               A
@@ -107,14 +107,14 @@ function Welcome() {
         {/* GREETING */}
         <div className="mb-6 animate-fade-in">
           <p className="text-muted" style={{ marginBottom: '0.25rem' }}>Welcome Back,</p>
-          <h2 className="heading-xl">{user ? `Dr. ${user.name}` : "Lecturer"}</h2>
+          <h2 className="heading-xl">{user ? ` ${user.name}` : "Lecturer"}</h2>
         </div>
 
         {/* STATS */}
-        <div className="flex gap-4 mb-8">
+        <div className="flex flex-mobile-col gap-4 mb-8">
           <div className="glass-card animate-pop" style={{ flex: 1, padding: '1.5rem 1.5rem', textAlign: 'center', animationDelay: '0.1s' }}>
             <h3 style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--primary)', marginBottom: '0.25rem' }}>{courses.length}</h3>
-            <p className="text-muted" style={{ fontSize: '0.875rem' }}>Your Courses</p>
+            <p className="text-muted" style={{ fontSize: '0.875rem', padding: '0 10px' }}>Your Courses</p>
           </div>
 
           <div className="glass-card animate-pop" style={{ flex: 1, padding: '1.5rem 1.5rem', textAlign: 'center', animationDelay: '0.2s' }}>
@@ -139,7 +139,7 @@ function Welcome() {
 
         {/* COURSES SECTION */}
         <div className="mb-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-wrap justify-between items-center gap-2 mb-4">
             <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
               ● YOUR COURSES
             </span>
@@ -150,7 +150,7 @@ function Welcome() {
 
           {showAddCourse && (
             <div className="glass-card mb-6 animate-pop" style={{ padding: '1.5rem' }}>
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex flex-wrap justify-between items-center gap-2 mb-4">
                  <h3 className="heading-md">{isCreatingNew ? "Create New Course" : "Find Your Course"}</h3>
                  <button className="btn btn-secondary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.75rem' }} onClick={() => setIsCreatingNew(!isCreatingNew)}>
                      {isCreatingNew ? "Back to Search" : "Not listed? Create New"}
@@ -204,7 +204,7 @@ function Welcome() {
           {courses.length === 0 ? (
              <div className="glass-card text-center py-12">
                <p className="text-muted mb-4">You haven't assigned any courses to yourself yet.</p>
-               <button className="btn btn-primary" onClick={handleToggleAdd}>Browse All Courses</button>
+               <button className="btn btn-primary" onClick={handleToggleAdd} id="browse-btn">Browse All Courses</button>
              </div>
           ) : (
             <div className="flex flex-col gap-4">
@@ -227,7 +227,7 @@ function Welcome() {
         </div>
 
         {/* ACTION BUTTONS */}
-        <div className="flex gap-4 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+        <div className="flex flex-mobile-col gap-4 animate-fade-in" style={{ animationDelay: '0.6s' }}>
           {/* <button className="btn btn-secondary" style={{ flex: 1 }} onClick={() => navigate('/create-session')}>View Active Sessions</button> */}
           <button className="btn btn-secondary" style={{ flex: 1 }} onClick={() => navigate('/reports')}>View Reports</button>
         </div>

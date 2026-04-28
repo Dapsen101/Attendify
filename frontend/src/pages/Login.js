@@ -28,11 +28,17 @@ function Login() {
   };
 
   const handleLogin = async () => {
+    if (!form.email || !form.password || (role === "student" && !form.matric)) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
     try {
       const response = await API.post("/auth/login", {
         role,
         email: form.email,
         password: form.password,
+        matric: form.matric,
       });
   
       const data = response.data;
@@ -96,7 +102,7 @@ function Login() {
               <label className="input-label">Matric Number</label>
               <input
                 name="matric"
-                placeholder="e.g. 19/1234"
+                placeholder="e.g. BU23CSC1104"
                 className="input-field"
                 value={form.matric}
                 onChange={handleChange}

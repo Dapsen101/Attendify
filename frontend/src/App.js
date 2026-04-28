@@ -3,8 +3,9 @@
 // Routes include landing page, authentication (login/register), 
 // dashboard, session creation, token entry, success page, and reports.
 // All routes are wrapped in Routes from react-router-dom.
-import { Routes, Route } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 import Landing from "./pages/Landing";
 import Welcome from "./pages/Welcome";
@@ -21,6 +22,36 @@ import CourseRegistration from "./pages/CourseRegistration";
 import MyCourses from "./pages/MyCourses";
 
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    let timeoutId;
+
+    const resetTimeout = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      timeoutId = setTimeout(() => {
+        localStorage.clear();
+        toast.error("Session expired due to 10 minutes of inactivity.");
+        navigate("/login");
+      }, 10 * 60 * 1000); // 10 minutes
+    };
+
+    const events = ["mousemove", "keydown", "click", "scroll"];
+    
+    resetTimeout();
+    events.forEach(event => window.addEventListener(event, resetTimeout));
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      events.forEach(event => window.removeEventListener(event, resetTimeout));
+    };
+  }, [navigate, location.pathname]);
+
   return (
     <>
       <Toaster position="top-right" />

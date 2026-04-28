@@ -13,8 +13,8 @@ exports.createSession = async (req, res) => {
     // Generate a secure numerical token
     const token = Math.floor(100000 + Math.random() * 900000).toString();
     
-    // Default expiration: 10 mins from now
-    const expiresAt = new Date(Date.now() + 10 * 60000);
+    // Default expiration: 3 minutes
+    const expiresAt = new Date(Date.now() + 3 * 60000);
 
     const session = await Session.create({
       lecturer: req.user.id,
