@@ -20,6 +20,8 @@ import StudentDashboard from "./pages/StudentDashboard";
 import AttendanceHistory from "./pages/AttendanceHistory";
 import CourseRegistration from "./pages/CourseRegistration";
 import MyCourses from "./pages/MyCourses";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const navigate = useNavigate();
@@ -69,6 +71,8 @@ function App() {
         <Route path="/enter-token" element={<EnterToken />} />
         <Route path="/success" element={<Success />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </>
   );
